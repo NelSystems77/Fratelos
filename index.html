@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRATELOS | Pizzería & Soda Artesanal</title>
+    <title>FRATELLOS | Deliciosa Comida Criolla, Americana & Pizzería Artesanal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;600&display=swap');
 
@@ -301,8 +301,8 @@
 <body>
 
     <header>
-        <h1>FRATELOS</h1>
-        <p>Soda & Pizzería Artesanal</p>
+        <h1>FRATELLOS</h1>
+        <p>Deliciosa Comida Criolla, Americana & Pizzería Artesanal</p>
     </header>
 
     <div class="container">
@@ -345,7 +345,7 @@
             </div>
 
             <div class="payment-reminder">
-                💳 <strong>Métodos de pago:</strong> Aceptamos SINPE Móvil o tarjeta en el local al momento de la entrega.
+                💳 <strong>Métodos de pago:</strong> Aceptamos SINPE Móvil o Tarjeta en el local al momento de la entrega.
             </div>
 
             <button class="btn-whatsapp" onclick="enviarPedido()">
@@ -437,7 +437,7 @@
                     soonDiv.className = 'menu-item coming-soon-card';
                     soonDiv.innerHTML = `
                         <h3>¡Muy pronto!</h3>
-                        <p>Estamos encendiendo el horno para traerte las mejores pizzas...</p>
+                        <p>Estarémos encendiendo el horno para traerte las mejores pizzas...</p>
                     `;
                     gridDiv.appendChild(soonDiv);
                 } else {
@@ -561,7 +561,7 @@
             hora = hora ? hora : 12; 
             const horaLegible = `${hora}:${minutoStr} ${ampm}`;
 
-            let mensaje = `*¡Hola FRATELOS!* 🍕🛵\nQuiero confirmar una pre-orden.\n\n`;
+            let mensaje = `*¡Hola FRATELLOS!* 🍕🛵\nQuiero confirmar una pre-orden.\n\n`;
             mensaje += `*Número de Orden:* #${numeroOrden}\n`;
             
             if (tipoPedido === 'local') {
