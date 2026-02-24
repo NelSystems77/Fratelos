@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRATELLOS | Deliciosa Comida Criolla, Americana & Pizzería Artesanal</title>
+    <title>FRATELOS | Pizzería & Soda Artesanal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;600&display=swap');
 
@@ -114,6 +114,24 @@
             margin-bottom: 1rem;
         }
 
+        /* Estilo para Pizzas Artesanales - Próximamente */
+        .coming-soon-card {
+            background: repeating-linear-gradient(45deg, #f9f9f9, #f9f9f9 10px, #ffffff 10px, #ffffff 20px);
+            border: 2px dashed #bdc3c7;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            color: #7f8c8d;
+            padding: 2rem 1.5rem;
+        }
+
+        .coming-soon-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
         button {
             background-color: var(--dark-color);
             color: white;
@@ -140,6 +158,21 @@
             position: sticky;
             top: 2rem;
             height: fit-content;
+        }
+
+        .alert-box {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid #ffeeba;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-box strong {
+            display: block;
+            margin-bottom: 0.2rem;
         }
 
         .cart-item {
@@ -195,7 +228,6 @@
         }
 
         .time-input-container {
-            display: none;
             background-color: #f9f9f9;
             padding: 1rem;
             border-radius: 5px;
@@ -207,6 +239,7 @@
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
             color: var(--dark-color);
+            font-weight: 600;
         }
 
         .time-input-container input[type="time"] {
@@ -222,8 +255,18 @@
             font-size: 1.5rem;
             font-weight: 600;
             text-align: right;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
             color: var(--dark-color);
+        }
+
+        .payment-reminder {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            background-color: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 5px;
         }
 
         .btn-whatsapp {
@@ -258,8 +301,8 @@
 <body>
 
     <header>
-        <h1>FRATELLOS</h1>
-        <p>Deliciosa Comida Criolla, Americana & Pizzería Artesanal</p>
+        <h1>FRATELOS</h1>
+        <p>Soda & Pizzería Artesanal</p>
     </header>
 
     <div class="container">
@@ -267,7 +310,13 @@
             </div>
 
         <aside class="cart-panel">
-            <h2 style="font-size: 1.5rem; border-bottom: none; margin-bottom: 0;">Tu Pedido</h2>
+            <h2 style="font-size: 1.5rem; border-bottom: none; margin-bottom: 1rem;">Tu Pedido</h2>
+            
+            <div class="alert-box">
+                <strong>⏳ Nota Importante:</strong> 
+                Para darte un excelente servicio y tener tu comida lista a tiempo, favor hacer tu pedido con <strong>una hora de antelación</strong>.
+            </div>
+
             <div id="cart-items">
                 <p class="empty-cart">Aún no has agregado productos.</p>
             </div>
@@ -276,24 +325,29 @@
                 <p>Modalidad de entrega:</p>
                 <div class="radio-group">
                     <label>
-                        <input type="radio" name="tipoPedido" value="local" checked onchange="toggleTimeInput()"> 
+                        <input type="radio" name="tipoPedido" value="local" checked onchange="actualizarEtiquetaHora()"> 
                         🍽️ Comer en el local
                     </label>
                     <label>
-                        <input type="radio" name="tipoPedido" value="recolectar" onchange="toggleTimeInput()"> 
+                        <input type="radio" name="tipoPedido" value="recolectar" onchange="actualizarEtiquetaHora()"> 
                         🛍️ Para recolectar
                     </label>
                 </div>
                 
-                <div class="time-input-container" id="time-container">
-                    <label for="horaRecoleccion">¿A qué hora pasas a recogerlo?</label>
-                    <input type="time" id="horaRecoleccion" required>
+                <div class="time-input-container">
+                    <label id="time-label" for="horaPedido">¿A qué hora nos visitas?</label>
+                    <input type="time" id="horaPedido" required>
                 </div>
             </div>
 
             <div class="cart-total" id="cart-total">
                 Total: ₡0
             </div>
+
+            <div class="payment-reminder">
+                💳 <strong>Métodos de pago:</strong> Aceptamos SINPE Móvil o tarjeta en el local al momento de la entrega.
+            </div>
+
             <button class="btn-whatsapp" onclick="enviarPedido()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c-.003 1.396.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
@@ -308,7 +362,7 @@
     </footer>
 
     <script>
-        // Estructura de datos basada en la imagen de la pizarra
+        // Estructura de datos actualizada
         const menuData = [
             {
                 categoria: "Desayunos",
@@ -335,6 +389,12 @@
                 ]
             },
             {
+                categoria: "Comida Americana",
+                items: [
+                    { id: 'am1', nombre: 'Porción de Pollo Frito con papas y refresco', precio: 3500 }
+                ]
+            },
+            {
                 categoria: "Porciones",
                 items: [
                     { id: 'p1', nombre: 'Proteína', precio: 1500 },
@@ -346,6 +406,11 @@
                     { id: 'p7', nombre: 'Carne en salsa', precio: 1800 },
                     { id: 'p8', nombre: 'Arroz ó Frijoles', precio: 900 }
                 ]
+            },
+            {
+                categoria: "Pizzas Artesanales 🍕",
+                proximamente: true,
+                items: []
             }
         ];
 
@@ -366,20 +431,31 @@
                 const gridDiv = document.createElement('div');
                 gridDiv.className = 'menu-grid';
 
-                seccion.items.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'menu-item';
-                    itemDiv.innerHTML = `
-                        <div>
-                            <div class="item-name">${item.nombre}</div>
-                            <div class="item-price">₡${item.precio}</div>
-                        </div>
-                        <button onclick="agregarAlCarrito('${item.id}', '${item.nombre}', ${item.precio})">
-                            Agregar
-                        </button>
+                // Si la sección es "Próximamente", renderizamos un cuadro especial
+                if (seccion.proximamente) {
+                    const soonDiv = document.createElement('div');
+                    soonDiv.className = 'menu-item coming-soon-card';
+                    soonDiv.innerHTML = `
+                        <h3>¡Muy pronto!</h3>
+                        <p>Estamos encendiendo el horno para traerte las mejores pizzas...</p>
                     `;
-                    gridDiv.appendChild(itemDiv);
-                });
+                    gridDiv.appendChild(soonDiv);
+                } else {
+                    seccion.items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'menu-item';
+                        itemDiv.innerHTML = `
+                            <div>
+                                <div class="item-name">${item.nombre}</div>
+                                <div class="item-price">₡${item.precio}</div>
+                            </div>
+                            <button onclick="agregarAlCarrito('${item.id}', '${item.nombre}', ${item.precio})">
+                                Agregar
+                            </button>
+                        `;
+                        gridDiv.appendChild(itemDiv);
+                    });
+                }
 
                 sectionDiv.appendChild(gridDiv);
                 menuContainer.appendChild(sectionDiv);
@@ -441,20 +517,20 @@
             cartTotal.innerText = `Total: ₡${total}`;
         }
 
-        // Mostrar u ocultar el campo de hora
-        function toggleTimeInput() {
+        // Cambiar la pregunta de la hora según la opción
+        function actualizarEtiquetaHora() {
             const tipoPedido = document.querySelector('input[name="tipoPedido"]:checked').value;
-            const timeContainer = document.getElementById('time-container');
+            const labelHora = document.getElementById('time-label');
             
-            if (tipoPedido === 'recolectar') {
-                timeContainer.style.display = 'block';
+            if (tipoPedido === 'local') {
+                labelHora.innerText = '¿A qué hora nos visitas?';
             } else {
-                timeContainer.style.display = 'none';
+                labelHora.innerText = '¿A qué hora pasas a recogerlo?';
             }
         }
 
         function generarNumeroOrden() {
-            return 'ORD-' + Math.floor(1000 + Math.random() * 9000); // Ejemplo: ORD-4829
+            return 'ORD-' + Math.floor(1000 + Math.random() * 9000); 
         }
 
         function enviarPedido() {
@@ -464,12 +540,12 @@
             }
 
             const tipoPedido = document.querySelector('input[name="tipoPedido"]:checked').value;
-            const horaRecoleccion = document.getElementById('horaRecoleccion').value;
+            const horaPedido = document.getElementById('horaPedido').value;
 
-            // Validación de la hora si es para recolectar
-            if (tipoPedido === 'recolectar' && !horaRecoleccion) {
-                alert('Por favor, indícanos a qué hora pasarás a recoger tu pedido.');
-                document.getElementById('horaRecoleccion').focus();
+            // Validación: Ahora la hora es obligatoria SIEMPRE
+            if (!horaPedido) {
+                alert('Por favor, indícanos a qué hora deseas tu pedido (recuerda hacerlo con 1 hora de antelación).');
+                document.getElementById('horaPedido').focus();
                 return;
             }
 
@@ -477,23 +553,22 @@
             const telefono = "50661965547";
             let total = 0;
 
+            // Formatear la hora a formato 12 horas
+            const [horaStr, minutoStr] = horaPedido.split(':');
+            let hora = parseInt(horaStr);
+            const ampm = hora >= 12 ? 'PM' : 'AM';
+            hora = hora % 12;
+            hora = hora ? hora : 12; 
+            const horaLegible = `${hora}:${minutoStr} ${ampm}`;
+
             let mensaje = `*¡Hola FRATELOS!* 🍕🛵\nQuiero confirmar una pre-orden.\n\n`;
             mensaje += `*Número de Orden:* #${numeroOrden}\n`;
             
-            // Agregar modalidad al mensaje
             if (tipoPedido === 'local') {
-                mensaje += `*Modalidad:* Para comer en el local 🍽️\n\n`;
+                mensaje += `*Modalidad:* Comer en el local 🍽️\n`;
+                mensaje += `*Hora de llegada:* ${horaLegible} ⏰\n\n`;
             } else {
                 mensaje += `*Modalidad:* Para recolectar 🛍️\n`;
-                
-                // Formatear la hora al formato de 12 horas para que sea más legible
-                const [horaStr, minutoStr] = horaRecoleccion.split(':');
-                let hora = parseInt(horaStr);
-                const ampm = hora >= 12 ? 'PM' : 'AM';
-                hora = hora % 12;
-                hora = hora ? hora : 12; // la hora '0' debe ser '12'
-                const horaLegible = `${hora}:${minutoStr} ${ampm}`;
-
                 mensaje += `*Hora de recolección:* ${horaLegible} ⏰\n\n`;
             }
 
@@ -505,7 +580,8 @@
                 mensaje += `🔸 ${item.cantidad}x ${item.nombre} (₡${subtotal})\n`;
             });
 
-            mensaje += `\n*Total a pagar:* ₡${total}\n\n`;
+            mensaje += `\n*Total a pagar:* ₡${total}\n`;
+            mensaje += `_Nota: Realizaré el pago vía SINPE o Tarjeta en el local._\n\n`;
             mensaje += `_Por favor confírmenme el pedido. ¡Gracias!_`;
 
             const urlWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
