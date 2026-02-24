@@ -168,6 +168,56 @@
             background-color: #ccc;
         }
 
+        /* Opciones de Pedido Styles */
+        .order-options {
+            margin: 1.5rem 0;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #ccc;
+        }
+
+        .order-options p {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .radio-group label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-input-container {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        .time-input-container label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .time-input-container input[type="time"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+
         .cart-total {
             font-size: 1.5rem;
             font-weight: 600;
@@ -221,6 +271,26 @@
             <div id="cart-items">
                 <p class="empty-cart">Aún no has agregado productos.</p>
             </div>
+            
+            <div class="order-options">
+                <p>Modalidad de entrega:</p>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="tipoPedido" value="local" checked onchange="toggleTimeInput()"> 
+                        🍽️ Comer en el local
+                    </label>
+                    <label>
+                        <input type="radio" name="tipoPedido" value="recolectar" onchange="toggleTimeInput()"> 
+                        🛍️ Para recolectar
+                    </label>
+                </div>
+                
+                <div class="time-input-container" id="time-container">
+                    <label for="horaRecoleccion">¿A qué hora pasas a recogerlo?</label>
+                    <input type="time" id="horaRecoleccion" required>
+                </div>
+            </div>
+
             <div class="cart-total" id="cart-total">
                 Total: ₡0
             </div>
@@ -371,6 +441,18 @@
             cartTotal.innerText = `Total: ₡${total}`;
         }
 
+        // Mostrar u ocultar el campo de hora
+        function toggleTimeInput() {
+            const tipoPedido = document.querySelector('input[name="tipoPedido"]:checked').value;
+            const timeContainer = document.getElementById('time-container');
+            
+            if (tipoPedido === 'recolectar') {
+                timeContainer.style.display = 'block';
+            } else {
+                timeContainer.style.display = 'none';
+            }
+        }
+
         function generarNumeroOrden() {
             return 'ORD-' + Math.floor(1000 + Math.random() * 9000); // Ejemplo: ORD-4829
         }
@@ -381,12 +463,40 @@
                 return;
             }
 
+            const tipoPedido = document.querySelector('input[name="tipoPedido"]:checked').value;
+            const horaRecoleccion = document.getElementById('horaRecoleccion').value;
+
+            // Validación de la hora si es para recolectar
+            if (tipoPedido === 'recolectar' && !horaRecoleccion) {
+                alert('Por favor, indícanos a qué hora pasarás a recoger tu pedido.');
+                document.getElementById('horaRecoleccion').focus();
+                return;
+            }
+
             const numeroOrden = generarNumeroOrden();
             const telefono = "50661965547";
             let total = 0;
 
             let mensaje = `*¡Hola FRATELOS!* 🍕🛵\nQuiero confirmar una pre-orden.\n\n`;
-            mensaje += `*Número de Orden:* #${numeroOrden}\n\n`;
+            mensaje += `*Número de Orden:* #${numeroOrden}\n`;
+            
+            // Agregar modalidad al mensaje
+            if (tipoPedido === 'local') {
+                mensaje += `*Modalidad:* Para comer en el local 🍽️\n\n`;
+            } else {
+                mensaje += `*Modalidad:* Para recolectar 🛍️\n`;
+                
+                // Formatear la hora al formato de 12 horas para que sea más legible
+                const [horaStr, minutoStr] = horaRecoleccion.split(':');
+                let hora = parseInt(horaStr);
+                const ampm = hora >= 12 ? 'PM' : 'AM';
+                hora = hora % 12;
+                hora = hora ? hora : 12; // la hora '0' debe ser '12'
+                const horaLegible = `${hora}:${minutoStr} ${ampm}`;
+
+                mensaje += `*Hora de recolección:* ${horaLegible} ⏰\n\n`;
+            }
+
             mensaje += `*Detalle de mi pedido:*\n`;
 
             carrito.forEach(item => {
@@ -396,7 +506,7 @@
             });
 
             mensaje += `\n*Total a pagar:* ₡${total}\n\n`;
-            mensaje += `_Por favor confírmenme el pedido y el tiempo estimado. ¡Gracias!_`;
+            mensaje += `_Por favor confírmenme el pedido. ¡Gracias!_`;
 
             const urlWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
             window.open(urlWhatsApp, '_blank');
